@@ -4,7 +4,7 @@ import os
 setup(
     name="serch_pharmaceuticals",
     description="measure serch pharmaceuticals interval time",
-    version="0.0.1",
+    version="2.0.0",
     author="GAI-313",
     author_email="nakartogawa.drone@gmail.com",
 

@@ -3,6 +3,7 @@ import cv2
 import os
 import traceback
 import time
+import csv
 
 import random
 
@@ -11,10 +12,16 @@ from load_yaml import LoadYaml
 import tkinter as tk
 from tkinter import messagebox
 
-RATE = 2        # 選択回数
-VAL_MIN = 36    # 開始番号
-VAL_MAX = 40    # 終了番号
+RATE = 2                        # 選択回数
+VAL_MIN = 36                    # 開始番号
+VAL_MAX = 40                    # 終了番号
+PROJ_NAME = 'Gai-Nakatogawa'    # データベース名
 
+# 編集してはいけない変数
+PROJ_DIR = os.path.join(
+    os.path.abspath(os.path.dirname(__name__)),
+    'csv'
+)
 
 class PopUp:
     def __init__(self, text):
@@ -49,15 +56,16 @@ class SerchPharmaceuticals():
             #'..',
             'images'
         )
-        print(os.path.abspath(os.path.dirname(__name__)))
         self.winname = 'serch pharmaceuticals'
         self.init_time = None
         self.push_time = None
     
     def mouse_cb(self, event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN:
+            self.clicked_pose = [x, y]
             if x >= self.target_area[0][0] and x <= self.target_area[1][0] and y >= self.target_area[0][1] and y <= self.target_area[1][1]:
                 self.push_time = time.time()
+                self.correct_flag = True
             else:
                 self.push_time = time.time()
                 print(f"Clicked different pose: {[x, y]}")
@@ -74,7 +82,9 @@ class SerchPharmaceuticals():
 
             self.push_time = False
             self.target_area = data_info[target]
-            #print(self.target_area)
+            self.correct_flag = False
+            self.clicked_pose = []
+
             print(f"target name: {target}")
             popup = PopUp(target)
             self.init_time = time.time()
@@ -85,6 +95,18 @@ class SerchPharmaceuticals():
             
             interval = self.push_time - self.init_time
             interval = f"{int(interval // 60):02}:{int(interval % 60):02}:{int((interval % 1) * 1000):02}"
+
+            data = [
+                image,
+                target,
+                self.correct_flag,
+                interval,
+                self.clicked_pose
+            ]
+            data_file = os.path.join(PROJ_DIR, PROJ_NAME)
+            with open(f'{data_file}.csv', 'a', newline='',encoding='utf-8') as file:
+                 writer = csv.writer(file)
+                 writer.writerow(data)
 
             print(f"clicked interval: {interval}")
             cv2.destroyAllWindows()
