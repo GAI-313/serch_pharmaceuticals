@@ -1,4 +1,4 @@
-# serch_pharmaceuticals Ver 0.0.12
+# serch_pharmaceuticals Ver 0.0.13
 
 ## usage
  Launch in venv. after install this package
@@ -32,3 +32,9 @@ PROJ_NAME = 'Sample'    # データベース名
 |:---:|:---:|:---:|:---:|:---:|
 |image_01|アムリキド|True|00.10.230|[270,300]|
 |image_01|アレグラ|False|00.10.230|[270,300]|
+
+## 更新方法
+　コマンドプロンプト内で `serch_pharmaceuticals` ディレクトリにいることを確認してから、以下のコマンドを実行してください。
+```
+git pull
+```

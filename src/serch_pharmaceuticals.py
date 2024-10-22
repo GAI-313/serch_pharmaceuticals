@@ -154,7 +154,7 @@ class SerchPharmaceuticals():
 
 def devel():
     serch_pharmaceuticals = SerchPharmaceuticals()
-    serch_pharmaceuticals.devel_selector("image_43")
+    serch_pharmaceuticals.devel_selector("image_49")
 
 def main():
     try:
