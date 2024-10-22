@@ -1,4 +1,4 @@
-# serch_pharmaceuticals
+# serch_pharmaceuticals Ver 0.0.12
 
 ## usage
  Launch in venv. after install this package
